@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-// import ApiError from '~/utils/ApiError'
+import { boardService } from '~/services/boardService'
 
 const createNew = async ( req, res, next ) => {
   try {
@@ -11,10 +11,10 @@ const createNew = async ( req, res, next ) => {
     // console.log('req.jwtDecoded: ', req.jwtDecoded)
 
     // Điều hướng dữ liệu sang tầng Service
-    // throw new ApiError(StatusCodes.BAD_REQUEST, 'Error from controller')
+    const createdBoard = await boardService.createNew(req.body)
 
     // Sau khi Service xử lý xong thì trả về kết quả về client
-    res.status(StatusCodes.CREATED).json({ message: 'POST from controller : API create' })
+    res.status(StatusCodes.CREATED).json(createdBoard)
   } catch (error) {
     next(error)
   }
